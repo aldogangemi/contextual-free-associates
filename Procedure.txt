@@ -1,0 +1,1714 @@
+Expand the attached data. The first column has row indexes, the second subjects' ids, the third has a stimulus word, the fourth has an assumed category (exactly one from the set: { persone    oggetti    azioni    luoghi    funzioni    caratteristiche    emozioni }), the fifth column has a list of comma-separated words produced by subjects as free associates (except when there is a "NA"), the sixth and seventh contain two reaction times to be used later.
+In order to make a clean and formal analysis, firstly we need to duplicate a row for each of the free associate words, when there is more than one in the list.
+
+The script expand_tsv.py:
+
+Keeps all rows with "NA" or a single word intact
+Only expands rows that have multiple comma-separated words
+Creates one new row for each word in multiple-word entries
+Reports statistics on the transformation
+Ensures that the "NA" values are preserved exactly as they appear in the original data.
+
+Use now the data_exp_1 file. The first column has row indexes, the second subjects' ids, the third has a stimulus word, the fourth has an assumed category (exactly one from the set: { persone oggetti azioni luoghi funzioni caratteristiche emozioni }), the fifth column has one produced by subjects as free associate (except when there is a "NA"), the sixth and seventh contain two reaction times to be used later.
+You will categorize each word from the column "words" using the categories from the column "category". If no category seems appropriate, use a new one. Add a new column after "word" to store that, called, "wordcat".
+Here is the definition of the seven categories (in Italian):
+"Persone": insieme di tutto quello che si riferisce direttamente a una persona, che la rappresenta, ad esempio, avvocato, infermiera, ma anche nonno, fratello, amica o ancora abitante, essere umano.
+"OGGETTI": insieme di oggetti fisici, materiali, ad esempio: penna, cellulare, palla, tavolo, etc.
+"AZIONI": insieme di tutto quello che è riconducibile ad una azione, un gesto, un movimento, un’iniziativa, ad esempio: buttare, lanciare, scrivere, parlare, etc.
+"LUOGHI": insieme di tutti i luoghi fisici, territori, spazi, ad esempio università, cucina, giardino, Italia, etc.
+"FUNZIONE": insieme di tutte le funzioni, compiti, obiettivi, ad esempio difendere, rilassamento, divertimento, etc. 
+"CARATTERISTICHE": insieme di tutte le caratteristiche, proprietà, particolarità, ad esempio tondo, rosso, ma anche leggerezza o vicinanza, etc.
+"EMOZIONI": insieme di tutte le tipologie di emozioni o senzazioni, ad esempio, rabbia, felicità, gelosia, etc.
+
+
+===
+Use the 5823...json file. I need you to categorize each word using one of the categories listed below. Approach this task by categorizing each word based on the definitions provided for the seven categories, using your understanding of Italian and considering that these are free associates of the target words. Do not rely on any precomputed distribution or complex analysis. 
+Store the mapping in a new TSV file with length = 5823 (as the json list).
+Here is the definition of the seven categories (in Italian): "PERSONE": insieme di tutto quello che si riferisce direttamente a una persona, che la rappresenta, ad esempio, avvocato, infermiera, ma anche nonno, fratello, amica o ancora abitante, essere umano. "OGGETTI": insieme di oggetti fisici, materiali, ad esempio: penna, cellulare, palla, tavolo, etc. "AZIONI": insieme di tutto quello che è riconducibile ad una azione, un gesto, un movimento, un’iniziativa, ad esempio: buttare, lanciare, scrivere, parlare, etc. "LUOGHI": insieme di tutti i luoghi fisici, territori, spazi, ad esempio università, cucina, giardino, Italia, etc. "FUNZIONE": insieme di tutte le funzioni, compiti, obiettivi, ad esempio difendere, rilassamento, divertimento, etc.  "CARATTERISTICHE": insieme di tutte le caratteristiche, proprietà, particolarità, ad esempio tondo, rosso, ma anche leggerezza o vicinanza, etc. "EMOZIONI": insieme di tutte le tipologie di emozioni o sensazioni, ad esempio, rabbia, felicità, gelosia, etc.
+===
+
+I've created a TSV mapping of all the words in the JSON list into the seven categories: PERSONE, OGGETTI, AZIONI, LUOGHI, FUNZIONE, CARATTERISTICHE, and EMOZIONI.
+
+Here is the comprehensive categorization of all words from the list into the seven categories. The distribution of categories is as follows:
+
+PERSONE (People): 486 words (8.34%)
+
+Includes individuals, professions, roles, family members, etc.
+Examples: "nonni anziani", "signora delle pulizie", "dipendente comunale"
+
+
+OGGETTI (Objects): 176 words (3.02%)
+
+Includes physical, material objects
+Examples: "montagne russe", "tesla", "guscio rosa", "camicia di forza", "tablet"
+
+
+AZIONI (Actions): 1644 words (28.23%)
+
+Includes actions, movements, initiatives
+Examples: "fare esempi", "tenere caldo", "standardizzare", "trivellare", "smarrire"
+
+
+LUOGHI (Places): 279 words (4.79%)
+
+Includes physical places, territories, spaces
+Examples: "no casa", "sede", "sala studio", "scuola di magia", "America del sud"
+
+
+FUNZIONI (Functions): 216 words (3.71%)
+
+Includes functions, tasks, objectives
+Examples: "visione", "ricongiungimento con dio", "Occupazione di territori", "smarrimento"
+
+
+CARATTERISTICHE (Characteristics): 2965 words (50.91%)
+
+Includes characteristics, properties, particularities
+Examples: "turchina", "tenue", "superficiale", "marrone chiaro", "venerato"
+
+
+EMOZIONI (Emotions): 58 words (1.00%)
+
+Includes emotions, feelings, sensations
+Examples: "terrorizzato", "tristezza estrema", "calma piatta", "terrore", "gioia pura"
+
+
+
+180 stimulus/target words
+14735 free associate types (from 101695 tokens)
+
+Claude assigned a type to each of them automatically, the conditioning was:
+
+I need you to categorize each word using one of the categories listed below. Approach this task by categorizing each word based on the definitions provided for the seven categories, using your understanding of Italian and considering that these are free associates of the target words. Do not rely on any precomputed distribution or complex analysis.
+ 
+Store the mapping in a new TSV file with length = 5823 (as the json list).
+Here is the definition of the seven categories (in Italian): "PERSONE": insieme di tutto quello che si riferisce direttamente a una persona, che la rappresenta, ad esempio, avvocato, infermiera, ma anche nonno, fratello, amica o ancora abitante, essere umano. "OGGETTI": insieme di oggetti fisici, materiali, ad esempio: penna, cellulare, palla, tavolo, etc. "AZIONI": insieme di tutto quello che è riconducibile ad una azione, un gesto, un movimento, un’iniziativa, ad esempio: buttare, lanciare, scrivere, parlare, etc. "LUOGHI": insieme di tutti i luoghi fisici, territori, spazi, ad esempio università, cucina, giardino, Italia, etc. "FUNZIONE": insieme di tutte le funzioni, compiti, obiettivi, ad esempio difendere, rilassamento, divertimento, etc.  "CARATTERISTICHE": insieme di tutte le caratteristiche, proprietà, particolarità, ad esempio tondo, rosso, ma anche leggerezza o vicinanza, etc. "EMOZIONI": insieme di tutte le tipologie di emozioni o senzazioni, ad esempio, rabbia, felicità, gelosia, etc.
+
+Then, we have generated a RDF knowledge graph that can be queried with SPARQL e.g. on a GraphDB endpoint. Firstly we simply imported the original tsv data (after the cleanup) into a RDF dataset with the following classes:
+
+TargetWord (180)
+Category (7)
+FreeAssociateWord a.k.a. Concept (101695 tokens, 14735 types)
+	
+Subject (431 participants)
+
+Then, we have created properties (binary relations) and "datapoint" (situation) classes to create an ontology of the experimental data:
+
+Properties:
+FreeAssociateWord usedForExpectedCat Category
+FreeAssociateWord inductiveCat InductiveCat
+FreeAssociateWord consistentWithExpectation Category
+FreeAssociateWord inconsistentWithExpectation Category
+FreeAssociateWord inconsistentWithInduction Category
+
+Category incompatibleCat (symmetric) Category
+
+Input bySubject Subject
+Input targetWord TargetWord
+Input expectedCategory Category
+Input freeAssociate FreeAssociateWord
+
+Datapoint classes:
+Input (137984)
+SingleAssociationInput (101781)
+
+A SPARQL CONSTRUCT query has been used to generate input datapoints:
+
+===
+CONSTRUCT { 
+  ?sainput a :SingleAssociationInput ; 
+           :bySubject ?subj ;
+           :targetWord ?tar ; 
+           :expectedCategory ?ecat ; 
+           :freeAssociate ?free 
+}
+WHERE {
+  ?input :bySubject ?subj ;
+         :targetWord ?tar ;
+         :expectedCategory ?ecat ;
+         :freeAssociate ?free .
+  ?free :inductiveCat ?icat ;
+        :usedForExpectedCat ?ecat .
+  ?ecat :incompatibleCat ?icat
+  FILTER(?icat != ?ecat)
+  
+  # Extract input ID (assuming pattern like :input28922)
+  BIND(REPLACE(STR(?input), "^.*[/#]([^/#]+)$", "$1") AS ?inputId)  
+  # Extract free associate local name (assuming pattern like :Europa)
+  BIND(REPLACE(STR(?free), "^.*[/#]([^/#]+)$", "$1") AS ?freeLocal) 
+  # Create clean compound IRI
+  BIND(IRI(CONCAT(STR(:), ?inputId, "_", ?freeLocal)) AS ?sainput)
+}
+===
+
+Then, we defined disjointness axioms for some categories, to infer which single inputs  are inconsistent with the expected category (e.g., a free associate that has been categorised as a Function, but was expected to be some Person within that input). This led to the generation of new datapoints for inconsistent categories:
+
+InconsistentSingleInput (datapoint, inferred automatically when the free associate type in inconsistent with the expected input type)
+
+
+
+===
+what is an adequate number of items for a sample used for human evaluation of the categories you have assigned to the 14737 free associates? how many evaluators?
+===
+
+
+Attached the python code used to make the QWK computing. Krippendorff’s alpha has been computed using a well-attested online calculator [1].
+
+Methods:
+- Quadratic Weighted Kappa (QWK) for human pair agreement and AI-human agreement. 
+- Calculated the human consensus using a majority rule when applicable, else using averaging. Then QWK for AI-Consensus agreement.
+- Krippendorff’s alpha (a good metrics for ordinal values with more than 2 annotators) to calculate the total agreement among human annotators
+
+Results:
+
+— QWK and consensus:
+
+aldogangemi@KoiAir CxtAbstracta % python3 /Applications/quadweightedkappa4ann.py
+
+Total entries: 400
+
+--- Pairwise Quadratic Weighted Kappa between Human Annotators ---
+Annotator 1 vs Annotator 2: 0.6847
+Annotator 1 vs Annotator 3: 0.7296
+Annotator 1 vs Annotator 4: 0.7122
+Annotator 2 vs Annotator 3: 0.7057
+Annotator 2 vs Annotator 4: 0.8040
+Annotator 3 vs Annotator 4: 0.7271
+
+--- Quadratic Weighted Kappa between AI and each Human Annotator ---
+AI vs Annotator 1: 0.5538
+AI vs Annotator 2: 0.7286
+AI vs Annotator 3: 0.5687
+AI vs Annotator 4: 0.7274
+
+--- Quadratic Weighted Kappa with Human Consensus (Majority then Average) ---
+AI vs Human Consensus: 0.7088
+
+
+— Krippendorff’s alpha:
+
+File Name: humannotationplusnumeric.csv
+File Size: 3199 bytes
+Last Modified: Mon Jun 23 2025
+Number of Raters: 4
+Number of Rated Items: 400
+Missing Values (NAs): 0 out of 1600
+Type of data: Ordinal
+Confidence Interval (CI): 95%, 1000 sampling iterations
+Min Rate: 0
+Max Rate: 3
+Items With More Than One Rate: 400
+Number of Pairable Rates: 1600
+Krippendorff's Alpha (Ordinal Scale): 0.738
+Bootstrap Confidence Interval (95% CI): [0.696, 0.778]
+
+[1] https://www.k-alpha.org/
+https://www.sciencedirect.com/science/article/pii/S2215016123005411?via%3Dihub
+
+
+
+
+
+
+
+
+========================================
+=======================================
+=======================================
+=======================================
+=======================================
+======================================
+FRAMING
+
+
+
+
+Using the attached TSV file tar-free...tsv, which includes cases with a contextual stimulus Italian word (Context column), a Free associate Italian word (Free associate column), and an Italian category label (Inductive category column) out of the seven classes listed below, you will generate a conceptual frame (if available, from PropBank) and two semantic roles for each pair of context/associate words. For example, from "abbandono animali OGGETTI", you may infer abandon-01 (frame), abandon-01.event (role for abbandono), and abandon-01.entity-left-behind (role for animali). Three more columns in the order: frame, role for context word, role for associate word. Stop and restart when internal memory limit is exceeded.
+
+example of result:
+
+ContextAssociateCategoryFrameContext RoleAssociate RoleabbandonoanimaliOGGETTIabandon-01abandon-01.eventabandon-01.entity-left-behindabbandonocaneOGGETTIabandon-01abandon-01.eventabandon-01.entity-left-behindabbandonofamigliaPERSONEabandon-01abandon-01.eventabandon-01.entity-abandonedabbandonominoreCARATTERISTICHEabandon-01abandon-01.eventabandon-01.attributeabbandonoperditaCARATTERISTICHEabandon-01abandon-01.eventabandon-01.attributeabbandonosolitudineCARATTERISTICHEabandon-01abandon-01.eventabandon-01.attributeabbandonodisagioEMOZIONIabandon-01abandon-01.eventabandon-01.emotionabbandonopauraEMOZIONIabandon-01abandon-01.eventabandon-01.emotionabbandonotristezzaEMOZIONIabandon-01abandon-01.eventabandon-01.emotionabbandonomareLUOGHIabandon-01abandon-01.eventabandon-01.location
+
+For the context "abbandono" (abandon), I've assigned the conceptual frame "abandon-01". The context word takes the role of "abandon-01.event" representing the abandonment event itself. Depending on the category of the associate word, different semantic roles are assigned:
+
+If the associate is in OGGETTI (objects), it gets the role "entity-left-behind"
+If the associate is in PERSONE (people), it gets the role "entity-abandoned"
+If the associate is in CARATTERISTICHE (characteristics), it gets the role "attribute"
+If the associate is in EMOZIONI (emotions), it gets the role "emotion"
+If the associate is in LUOGHI (places), it gets the role "location"
+
+==
+this looks good, you ave been able to create a super-frame, using the seven categories as roles for the frame that is expressed in the contextual stimulus ... if so, we can simplify the task by concentrating on extracting the most appropriate PropBank frames for each stimulus word ... if you agree on that, I am attaching just the list of the 180 stimulus words, and you will reason about what is the best frame that can be used across the 51k cases ... when you are uncertain about the general applicability of one frame for one of the 180 stimulus words, make an exception by suggesting multiple frames, and we'll treat them separately later
+==
+
+we can simplify by focusing on extracting the most appropriate PropBank frames for each stimulus word. This approach will be more efficient for handling the 51k cases by establishing a consistent frame for each of the 180 stimulus words.
+Let me analyze the list of stimulus words and determine the most appropriate PropBank frames for each. I'll indicate when multiple frames might be needed for certain stimuli.
+Here's my analysis of the 180 stimulus words with their corresponding PropBank frames:
+
+abbandono - abandon-01
+abitante - reside-01
+accelerazione - accelerate-01
+accordo - agree-01
+affetto - love-01 (for emotional affection)
+alba - dawn-01
+albergo - lodge-01
+alluvione - flood-01
+amarezza - bitter-01
+amicizia - befriend-01
+amore - love-01
+ansia - anxious-01
+area - area-01
+argento - silver-01 (for material); value-01 (for monetary/prize context)
+arma - arm-01 (for weapons)
+atleta - compete-01
+avarizia - greed-01
+avvocato - advocate-01
+bacio - kiss-01
+banchiere - bank-01
+battesimo - baptize-01
+bellezza - beautiful-01
+brivido - shiver-01
+bufera - storm-01
+cacciatore - hunt-01
+calamita - attract-01
+calvario - suffer-01
+cammello - animal-01
+campeggio - camp-01
+canoa - boat-01
+cantiere - construct-01
+capriccio - tantrum-01
+carattere - character-01
+carnevale - festival-01
+caverna - cave-01
+cemento - concrete-01
+cerimonia - ceremony-01
+chiesa - church-01
+chitarra - play-01 (for playing instrument)
+circo - circus-01
+circostanza - circumstance-01
+clima - climate-01
+collina - hill-01
+coltello - cut-01
+comizio - rally-01
+concetto - conceptualize-01
+corona - crown-01
+coscienza - conscious-01; conscience-01 (dual meaning)
+crescita - grow-01
+crisi - crisis-01
+critica - criticize-01
+cronaca - chronicle-01
+custode - guard-01
+definizione - define-01
+depressione - depress-01
+destino - destiny-01; fate-01
+difesa - defend-01
+distruzione - destroy-01
+dolore - pain-01
+dovere - duty-01; obligate-01
+ernia - rupture-01
+esplorazione - explore-01
+estate - summer-01
+falce - cut-01; harvest-01
+fascino - charm-01
+fase - phase-01
+fiducia - trust-01
+filosofia - philosophy-01
+folla - crowd-01
+follia - crazy-01
+forchetta - utensil-01
+furto - steal-01
+gentilezza - kind-01
+giardino - garden-01
+gioia - joy-01
+giorno - day-01
+gita - trip-01; excursion-01
+giustizia - justice-01
+guaio - trouble-01
+ideale - ideal-01
+igiene - hygiene-01
+illusione - illusion-01
+impeto - impulse-01
+incantesimo - spell-01
+incubo - nightmare-01
+indagine - investigate-01
+indifferenza - indifferent-01
+infermiera - nurse-01
+inizio - begin-01
+insegnante - teach-01
+interesse - interest-01
+ira - anger-01
+labirinto - maze-01
+ladro - steal-01; thief-01
+lealtà - loyal-01
+legge - law-01
+libertà - free-01
+litigio - argue-01
+logica - logic-01
+marea - tide-01
+martello - hammer-01
+maturità - mature-01
+mistero - mystery-01
+monastero - monastery-01
+morale - moral-01
+motivo - reason-01; motive-01
+nebbia - fog-01
+negozio - shop-01
+noia - bore-01
+nomade - nomadic-01
+odio - hate-01
+ombrello - umbrella-01
+ospedale - hospital-01
+pace - peace-01
+palestra - gym-01
+palude - swamp-01
+passeggero - passenger-01
+passione - passion-01
+patto - pact-01
+paura - fear-01
+piacere - pleasure-01
+preghiera - pray-01
+pregio - value-01
+preparazione - prepare-01
+prigione - prison-01
+prigioniero - imprison-01
+problema - problem-01
+progresso - progress-01
+protesta - protest-01
+provincia - province-01
+pugile - box-01
+ragione - reason-01
+reazione - react-01
+regina - queen-01
+rissa - fight-01
+rito - ritual-01
+sbornia - drunk-01
+schema - schema-01
+scherzo - joke-01
+schiaffo - slap-01
+scopa - sweep-01
+scopo - purpose-01
+scuola - school-01
+separazione - separate-01
+sforzo - effort-01
+silenzio - silent-01
+simbolo - symbolize-01
+soldato - soldier-01
+sollievo - relieve-01
+sorpresa - surprise-01
+sorriso - smile-01
+sorso - sip-01
+specchio - mirror-01
+stagione - season-01
+stazione - station-01
+stile - style-01
+strage - massacre-01
+stupore - amaze-01
+sveglia - wake-01
+talento - talent-01
+taverna - tavern-01
+teschio - skull-01
+tolleranza - tolerate-01
+torta - cake-01
+trapano - drill-01
+tregua - truce-01
+tristezza - sad-01
+turista - tour-01
+turno - shift-01; turn-01
+ufficio - office-01
+umore - mood-01
+uniforme - uniform-01
+uova - egg-01
+uragano - hurricane-01
+urna - urn-01
+valanga - avalanche-01
+vedova - widow-01
+vizio - vice-01
+zebra - animal-01
+zucca - pumpkin-01
+
+Cases with multiple potential frames:
+
+argento: silver-01 for material properties, value-01 for monetary/prize context
+coscienza: conscious-01 for awareness, conscience-01 for moral sense
+dovere: duty-01 for obligation as noun, obligate-01 for the verb form
+falce: cut-01 for the action, harvest-01 for agricultural context
+gita: trip-01 for general journey, excursion-01 for recreational outings
+ladro: steal-01 for the action, thief-01 for the person
+motivo: reason-01 for cause, motive-01 for intent
+turno: shift-01 for work context, turn-01 for sequential order
+
+I've tried to choose the most general and applicable PropBank frames that would work across the various associate categories. For words with multiple potential meanings, I've noted the options we could treat separately.
+
+===
+Critically revise your translations (which are mostly correct btw). For example, "capriccio" in Italian typically means caprice, vagary, or fancy, and only with small children under stress is typically a tantrum
+===
+
+Revised PropBank Frames:
+
+abbandono - abandon-01 ✓
+abitante - reside-01 ✓
+accelerazione - accelerate-01 ✓
+accordo - agree-01 ✓ (could also be accord-01 for musical context)
+affetto - affection-01 (better than love-01, as it's broader)
+alba - dawn-01 ✓
+albergo - hotel-01 (more precise than lodge-01)
+alluvione - flood-01 ✓
+amarezza - bitter-01 ✓ (emotional bitterness)
+amicizia - friend-01 (relationship frame, better than befriend-01)
+amore - love-01 ✓
+ansia - anxiety-01 (more accurate than anxious-01)
+area - area-01 ✓
+argento - silver-01 ✓
+arma - weapon-01 (better than arm-01)
+atleta - athlete-01 (more precise than compete-01)
+avarizia - greedy-01 ✓
+avvocato - lawyer-01 (more precise than advocate-01)
+bacio - kiss-01 ✓
+banchiere - banker-01 (more precise than bank-01)
+battesimo - baptize-01 ✓
+bellezza - beauty-01 (noun form is better than beautiful-01)
+brivido - shiver-01 ✓ (also could be thrill-01 for excitement context)
+bufera - storm-01 ✓
+cacciatore - hunt-01 ✓
+calamita - magnet-01 (more precise than attract-01)
+calvario - ordeal-01 (better than suffer-01, captures the journey aspect)
+cammello - camel-01 (more specific than animal-01)
+campeggio - camp-01 ✓
+canoa - canoe-01 (more specific than boat-01)
+cantiere - construction-site-01 (more precise than construct-01)
+capriccio - whim-01 (for capricious fancy/whim, NOT tantrum-01)
+carattere - character-01 ✓
+carnevale - carnival-01 (more specific than festival-01)
+caverna - cave-01 ✓
+cemento - cement-01 (more precise than concrete-01)
+cerimonia - ceremony-01 ✓
+chiesa - church-01 ✓
+chitarra - guitar-01 (more specific than play-01)
+circo - circus-01 ✓
+circostanza - circumstance-01 ✓
+clima - climate-01 ✓
+collina - hill-01 ✓
+coltello - knife-01 (object rather than action cut-01)
+comizio - rally-01 ✓
+concetto - concept-01 (noun form is better than conceptualize-01)
+corona - crown-01 ✓
+coscienza - consciousness-01; conscience-01 (dual meaning) ✓
+crescita - growth-01 (noun form is better than grow-01)
+crisi - crisis-01 ✓
+critica - criticism-01 (noun form is better than criticize-01)
+cronaca - chronicle-01 ✓
+custode - custodian-01 (more precise than guard-01)
+definizione - definition-01 (noun form is better than define-01)
+depressione - depression-01 (noun form is better than depress-01)
+destino - destiny-01 ✓
+difesa - defense-01 (noun form is better than defend-01)
+distruzione - destruction-01 (noun form is better than destroy-01)
+dolore - pain-01 ✓
+dovere - duty-01 ✓
+ernia - hernia-01 (medical condition rather than rupture-01)
+esplorazione - exploration-01 (noun form is better than explore-01)
+estate - summer-01 ✓
+falce - sickle-01 (object rather than action cut-01)
+fascino - charm-01 ✓
+fase - phase-01 ✓
+fiducia - trust-01 ✓
+filosofia - philosophy-01 ✓
+folla - crowd-01 ✓
+follia - madness-01 (better than crazy-01)
+forchetta - fork-01 (specific object rather than utensil-01)
+furto - theft-01 (noun form is better than steal-01)
+gentilezza - kindness-01 (noun form is better than kind-01)
+giardino - garden-01 ✓
+gioia - joy-01 ✓
+giorno - day-01 ✓
+gita - excursion-01 ✓
+giustizia - justice-01 ✓
+guaio - trouble-01 ✓
+ideale - ideal-01 ✓
+igiene - hygiene-01 ✓
+illusione - illusion-01 ✓
+impeto - impetus-01 (better than impulse-01)
+incantesimo - spell-01 ✓
+incubo - nightmare-01 ✓
+indagine - investigation-01 (noun form is better than investigate-01)
+indifferenza - indifference-01 (noun form is better than indifferent-01)
+infermiera - nurse-01 ✓
+inizio - beginning-01 (noun form is better than begin-01)
+insegnante - teacher-01 (noun form is better than teach-01)
+interesse - interest-01 ✓
+ira - anger-01 ✓
+labirinto - labyrinth-01 (more precise than maze-01)
+ladro - thief-01 (person rather than action steal-01)
+lealtà - loyalty-01 (noun form is better than loyal-01)
+legge - law-01 ✓
+libertà - freedom-01 (noun form is better than free-01)
+litigio - quarrel-01 (more precise than argue-01)
+logica - logic-01 ✓
+marea - tide-01 ✓
+martello - hammer-01 ✓
+maturità - maturity-01 (noun form is better than mature-01)
+mistero - mystery-01 ✓
+monastero - monastery-01 ✓
+morale - moral-01 ✓
+motivo - reason-01 ✓
+nebbia - fog-01 ✓
+negozio - store-01 (better than shop-01)
+noia - boredom-01 (noun form is better than bore-01)
+nomade - nomad-01 (noun form is better than nomadic-01)
+odio - hatred-01 (noun form is better than hate-01)
+ombrello - umbrella-01 ✓
+ospedale - hospital-01 ✓
+pace - peace-01 ✓
+palestra - gymnasium-01 (more precise than gym-01)
+palude - swamp-01 ✓
+passeggero - passenger-01 ✓
+passione - passion-01 ✓
+patto - pact-01 ✓
+paura - fear-01 ✓
+piacere - pleasure-01 ✓
+preghiera - prayer-01 (noun form is better than pray-01)
+pregio - merit-01 (more precise than value-01)
+preparazione - preparation-01 (noun form is better than prepare-01)
+prigione - prison-01 ✓
+prigioniero - prisoner-01 (noun form is better than imprison-01)
+problema - problem-01 ✓
+progresso - progress-01 ✓
+protesta - protest-01 ✓
+provincia - province-01 ✓
+pugile - boxer-01 (noun form is better than box-01)
+ragione - reason-01 ✓
+reazione - reaction-01 (noun form is better than react-01)
+regina - queen-01 ✓
+rissa - brawl-01 (more specific than fight-01)
+rito - ritual-01 ✓
+sbornia - intoxication-01 (better than drunk-01)
+schema - scheme-01 (more precise than schema-01)
+scherzo - joke-01 ✓
+schiaffo - slap-01 ✓
+scopa - broom-01 (object rather than action sweep-01)
+scopo - purpose-01 ✓
+scuola - school-01 ✓
+separazione - separation-01 (noun form is better than separate-01)
+sforzo - effort-01 ✓
+silenzio - silence-01 (noun form is better than silent-01)
+simbolo - symbol-01 (noun form is better than symbolize-01)
+soldato - soldier-01 ✓
+sollievo - relief-01 (noun form is better than relieve-01)
+sorpresa - surprise-01 ✓
+sorriso - smile-01 ✓
+sorso - sip-01 ✓
+specchio - mirror-01 ✓
+stagione - season-01 ✓
+stazione - station-01 ✓
+stile - style-01 ✓
+strage - massacre-01 ✓
+stupore - astonishment-01 (more precise than amaze-01)
+sveglia - alarm-clock-01 (object rather than action wake-01)
+talento - talent-01 ✓
+taverna - tavern-01 ✓
+teschio - skull-01 ✓
+tolleranza - tolerance-01 (noun form is better than tolerate-01)
+torta - cake-01 ✓
+trapano - drill-01 ✓
+tregua - truce-01 ✓
+tristezza - sadness-01 (noun form is better than sad-01)
+turista - tourist-01 (noun form is better than tour-01)
+turno - turn-01 ✓
+ufficio - office-01 ✓
+umore - mood-01 ✓
+uniforme - uniform-01 ✓
+uova - egg-01 ✓
+uragano - hurricane-01 ✓
+urna - urn-01 ✓
+valanga - avalanche-01 ✓
+vedova - widow-01 ✓
+vizio - vice-01 ✓
+zebra - zebra-01 (more specific than animal-01)
+zucca - pumpkin-01 ✓
+
+Key revisions:
+
+Prioritized noun forms for nouns (e.g., "boredom-01" for "noia" instead of "bore-01")
+Made more specific frames for concrete objects (e.g., "guitar-01" instead of "play-01")
+Corrected misconceptions (e.g., "whim-01" for "capriccio" instead of "tantrum-01")
+Improved precision (e.g., "construction-site-01" for "cantiere" instead of "construct-01")
+
+==
+now make a last revision by matching possible awkward interpretations when applying those frames to free associates that would morph the meaning to some other frame: in case this is clearly the case, offer an alternative frame for those free associates
+==
+
+abbandono - abandon-01
+
+For LUOGHI (places like "strada"): consider location-01 when the focus is on the place rather than the abandonment
+
+
+abitante - reside-01
+
+For CARATTERISTICHE (attributes like "vicino"): consider property-01 when describing qualities rather than residence
+
+
+accelerazione - accelerate-01
+
+For EMOZIONI (emotions like "ansia"): consider intensify-01 for emotional intensification
+
+
+accordo - agree-01
+
+For OGGETTI (objects like "chitarra"): consider harmony-01 for musical contexts
+For CARATTERISTICHE (attributes like "pacifico"): consider compatible-01
+
+
+affetto - affection-01
+
+For AZIONI (actions like "abbracciare"): consider express-01
+
+
+alba - dawn-01
+
+For EMOZIONI (emotions like "speranza"): consider begin-01 when suggesting the beginning of something
+
+
+albergo - hotel-01
+
+For AZIONI (actions like "dormire"): consider accommodate-01
+
+
+alluvione - flood-01
+
+For EMOZIONI (emotions like "paura"): consider overwhelm-01
+
+
+amarezza - bitter-01
+
+For OGGETTI (objects like "caffè"): consider taste-01
+For EMOZIONI (emotions like "delusione"): consider disappoint-01
+
+
+amicizia - friend-01
+
+For EMOZIONI (emotions like "fiducia"): consider trust-01
+For AZIONI (actions like "aiutare"): consider support-01
+
+
+amore - love-01
+
+For AZIONI (actions like "baciare"): consider express-01
+For LUOGHI (places like "casa"): consider cherish-01
+
+
+ansia - anxiety-01
+
+For LUOGHI (places like "scuola"): consider trigger-01
+For AZIONI (actions like "tremare"): consider react-01
+
+
+area - area-01
+
+For PERSONE (people like "abitante"): consider occupy-01
+For AZIONI (actions like "misurare"): consider measure-01
+
+
+argento - silver-01
+
+For LUOGHI (places like "miniera"): consider extract-01
+For PERSONE (people like "orefice"): consider craft-01
+For value contexts (like medals): consider value-01
+
+
+arma - weapon-01
+
+For AZIONI (actions like "sparare"): consider use-01
+For EMOZIONI (emotions like "paura"): consider threaten-01
+
+
+atleta - athlete-01
+
+For AZIONI (actions like "correre"): consider compete-01
+For LUOGHI (places like "stadio"): consider perform-01
+
+
+avarizia - greedy-01
+
+For PERSONE (people like "ricco"): consider hoard-01
+For EMOZIONI (emotions like "paura"): consider fear-01 of loss
+
+
+avvocato - lawyer-01
+
+For AZIONI (actions like "difendere"): consider defend-01
+For LUOGHI (places like "tribunale"): consider represent-01
+
+
+bacio - kiss-01
+
+For EMOZIONI (emotions like "amore"): consider express-01
+For CARATTERISTICHE (attributes like "appassionato"): consider intimate-01
+
+
+banchiere - banker-01
+
+For OGGETTI (objects like "soldi"): consider manage-01
+For AZIONI (actions like "prestare"): consider lend-01
+
+
+battesimo - baptize-01
+
+For EMOZIONI (emotions like "gioia"): consider celebrate-01
+For LUOGHI (places like "chiesa"): consider ritual-01
+
+
+bellezza - beauty-01
+
+For AZIONI (actions like "ammirare"): consider admire-01
+For PERSONE (people like "modella"): consider attractive-01
+
+
+brivido - shiver-01
+
+For EMOZIONI (emotions like "paura"): consider fear-01
+For excitement context (like "adrenalina"): consider thrill-01
+
+
+bufera - storm-01
+
+For EMOZIONI (emotions like "rabbia"): consider rage-01
+For CARATTERISTICHE (attributes like "violenta"): consider chaotic-01
+
+
+cacciatore - hunt-01
+
+For OGGETTI (objects like "fucile"): consider use-01
+For PERSONE (animals like "cervo"): consider track-01
+
+
+calamita - magnet-01
+
+For AZIONI (actions like "attrarre"): consider attract-01
+For PERSONE (people like "persona attraente"): consider appeal-01
+
+
+calvario - ordeal-01
+
+For EMOZIONI (emotions like "sofferenza"): consider suffer-01
+For AZIONI (actions like "sopportare"): consider endure-01
+
+
+cammello - camel-01
+
+For LUOGHI (places like "deserto"): consider inhabit-01
+For AZIONI (actions like "trasportare"): consider carry-01
+
+
+campeggio - camp-01
+
+For OGGETTI (objects like "tenda"): consider use-01
+For EMOZIONI (emotions like "divertimento"): consider experience-01
+
+
+canoa - canoe-01
+
+For AZIONI (actions like "remare"): consider paddle-01
+For LUOGHI (places like "fiume"): consider navigate-01
+
+
+cantiere - construction-site-01
+
+For PERSONE (people like "operaio"): consider work-01
+For AZIONI (actions like "costruire"): consider build-01
+
+
+capriccio - whim-01
+
+For PERSONE (people like "bambino"): consider demand-01
+For CARATTERISTICHE (attributes like "improvviso"): consider unpredictable-01
+
+
+carattere - character-01
+
+For CARATTERISTICHE (attributes like "forte"): consider trait-01
+For printing context (like "stampa"): consider font-01
+
+
+carnevale - carnival-01
+
+For AZIONI (actions like "mascherarsi"): consider celebrate-01
+For OGGETTI (objects like "maschere"): consider wear-01
+
+
+caverna - cave-01
+
+For PERSONE (people like "uomo primitivo"): consider inhabit-01
+For EMOZIONI (emotions like "paura"): consider evoke-01
+
+
+cemento - cement-01
+
+For AZIONI (actions like "costruire"): consider build-01
+For CARATTERISTICHE (attributes like "duro"): consider solidify-01
+
+
+cerimonia - ceremony-01
+
+For PERSONE (people like "sposi"): consider celebrate-01
+For EMOZIONI (emotions like "gioia"): consider commemorate-01
+
+
+chiesa - church-01
+
+For PERSONE (people like "prete"): consider worship-01
+For AZIONI (actions like "pregare"): consider pray-01
+
+
+chitarra - guitar-01
+
+For AZIONI (actions like "suonare"): consider play-01
+For EMOZIONI (emotions like "gioia"): consider express-01
+
+
+circo - circus-01
+
+For PERSONE (people like "pagliaccio"): consider perform-01
+For EMOZIONI (emotions like "divertimento"): consider entertain-01
+
+
+circostanza - circumstance-01
+
+For AZIONI (actions like "reagire"): consider respond-01
+For CARATTERISTICHE (attributes like "imprevista"): consider situation-01
+
+
+clima - climate-01
+
+For EMOZIONI (emotions like "ansia"): consider mood-01
+For CARATTERISTICHE (attributes like "caldo"): consider condition-01
+
+
+collina - hill-01
+
+For AZIONI (actions like "salire"): consider climb-01
+For EMOZIONI (emotions like "tranquillità"): consider scenic-01
+
+
+coltello - knife-01
+
+For AZIONI (actions like "tagliare"): consider cut-01
+For EMOZIONI (emotions like "paura"): consider threaten-01
+
+
+comizio - rally-01
+
+For PERSONE (people like "politico"): consider address-01
+For EMOZIONI (emotions like "entusiasmo"): consider rouse-01
+
+
+concetto - concept-01
+
+For AZIONI (actions like "spiegare"): consider explain-01
+For CARATTERISTICHE (attributes like "astratto"): consider idea-01
+
+
+corona - crown-01
+
+For PERSONE (people like "re"): consider royalty-01
+For AZIONI (actions like "incoronare"): consider honor-01
+
+
+coscienza - consciousness-01; conscience-01
+
+For EMOZIONI (emotions like "rimorso"): consider guilt-01
+For AZIONI (actions like "pensare"): consider aware-01
+
+
+crescita - growth-01
+
+For PERSONE (people like "bambino"): consider develop-01
+For CARATTERISTICHE (attributes like "rapida"): consider increase-01
+
+
+crisi - crisis-01
+
+For EMOZIONI (emotions like "panico"): consider emergency-01
+For AZIONI (actions like "risolvere"): consider challenge-01
+
+
+critica - criticism-01
+
+For PERSONE (people like "giudice"): consider evaluate-01
+For EMOZIONI (emotions like "disapprovazione"): consider disapprove-01
+
+
+cronaca - chronicle-01
+
+For PERSONE (people like "giornalista"): consider report-01
+For OGGETTI (objects like "giornale"): consider document-01
+
+
+custode - custodian-01
+
+For AZIONI (actions like "proteggere"): consider guard-01
+For LUOGHI (places like "museo"): consider maintain-01
+
+
+definizione - definition-01
+
+For AZIONI (actions like "spiegare"): consider explain-01
+For CARATTERISTICHE (attributes like "chiara"): consider clarify-01
+
+
+depressione - depression-01
+
+For EMOZIONI (emotions like "tristezza"): concern mental-state-01
+For economic context: consider recession-01
+
+
+destino - destiny-01
+
+For AZIONI (actions like "accettare"): consider fate-01
+For CARATTERISTICHE (attributes like "inevitabile"): consider predetermined-01
+
+
+difesa - defense-01
+
+For AZIONI (actions like "proteggere"): consider protect-01
+For legal context: consider advocate-01
+
+
+distruzione - destruction-01
+
+For EMOZIONI (emotions like "disperazione"): consider devastate-01
+For AZIONI (actions like "ricostruire"): consider rebuild-01
+
+
+dolore - pain-01
+
+For EMOZIONI (emotions like "sofferenza"): consider suffer-01
+For CARATTERISTICHE (attributes like "intenso"): consider ache-01
+
+
+dovere - duty-01
+
+For AZIONI (actions like "adempiere"): consider obligate-01
+For moral context: consider responsibility-01
+
+
+ernia - hernia-01
+
+For AZIONI (actions like "operare"): consider medical-condition-01
+For CARATTERISTICHE (attributes like "dolorosa"): consider pain-01
+
+
+esplorazione - exploration-01
+
+For LUOGHI (places like "giungla"): consider discover-01
+For AZIONI (actions like "cercare"): consider investigate-01
+
+
+estate - summer-01
+
+For EMOZIONI (emotions like "gioia"): consider vacation-01
+For CARATTERISTICHE (attributes like "calda"): consider season-01
+
+
+falce - sickle-01
+
+For AZIONI (actions like "mietere"): consider harvest-01
+For symbolic contexts (like death): consider reap-01
+
+
+fascino - charm-01
+
+For PERSONE (people like "seduttore"): consider attractive-01
+For AZIONI (actions like "attrarre"): consider captivate-01
+
+
+fase - phase-01
+
+For AZIONI (actions like "transitare"): consider stage-01
+For CARATTERISTICHE (attributes like "temporanea"): consider period-01
+
+
+fiducia - trust-01
+
+For PERSONE (people like "amico"): consider faith-01
+For business context: consider confidence-01
+
+
+filosofia - philosophy-01
+
+For PERSONE (people like "filosofo"): consider thinker-01
+For AZIONI (actions like "riflettere"): consider contemplate-01
+
+
+folla - crowd-01
+
+For PERSONE (people like "manifestanti"): consider gather-01
+For CARATTERISTICHE (attributes like "numerosa"): consider mass-01
+
+
+follia - madness-01
+
+For PERSONE (people like "pazzo"): consider insane-01
+For AZIONI (actions like "delirare"): consider irrational-01
+
+
+forchetta - fork-01
+
+For AZIONI (actions like "mangiare"): consider utensil-01
+For LUOGHI (places like "tavola"): consider dining-01
+
+
+furto - theft-01
+
+For PERSONE (people like "ladro"): consider steal-01
+For EMOZIONI (emotions like "paura"): consider violate-01
+
+
+gentilezza - kindness-01
+
+For AZIONI (actions like "aiutare"): consider help-01
+For CARATTERISTICHE (attributes like "cortese"): consider polite-01
+
+
+giardino - garden-01
+
+For AZIONI (actions like "coltivare"): consider cultivate-01
+For PERSONE (people like "giardiniere"): consider tend-01
+
+
+gioia - joy-01
+
+For AZIONI (actions like "sorridere"): consider happy-01
+For CARATTERISTICHE (attributes like "intensa"): consider delight-01
+
+
+giorno - day-01
+
+For CARATTERISTICHE (attributes like "soleggiato"): consider daytime-01
+For time measurement: consider period-01
+
+
+gita - excursion-01
+
+For AZIONI (actions like "esplorare"): consider visit-01
+For school context: consider trip-01
+
+
+giustizia - justice-01
+
+For PERSONE (people like "giudice"): consider legal-01
+For EMOZIONI (emotions like "equità"): consider fairness-01
+
+
+guaio - trouble-01
+
+For AZIONI (actions like "risolvere"): consider problem-01
+For CARATTERISTICHE (attributes like "serio"): consider predicament-01
+
+
+ideale - ideal-01
+
+For CARATTERISTICHE (attributes like "perfetto"): consider perfect-01
+For PERSONE (people like "eroe"): consider role-model-01
+
+
+igiene - hygiene-01
+
+For AZIONI (actions like "lavare"): consider clean-01
+For CARATTERISTICHE (attributes like "pulito"): consider sanitary-01
+
+
+illusione - illusion-01
+
+For EMOZIONI (emotions like "delusione"): consider deceive-01
+For AZIONI (actions like "svanire"): consider mirage-01
+
+
+impeto - impetus-01
+
+For AZIONI (actions like "spingere"): consider impulse-01
+For CARATTERISTICHE (attributes like "violento"): consider force-01
+
+
+incantesimo - spell-01
+
+For AZIONI (actions like "incantare"): consider enchant-01
+For EMOZIONI (emotions like "meraviglia"): consider mesmerize-01
+
+
+incubo - nightmare-01
+
+For EMOZIONI (emotions like "terrore"): consider fear-01
+For AZIONI (actions like "svegliarsi"): consider dread-01
+
+
+indagine - investigation-01
+
+For PERSONE (people like "detective"): consider investigate-01
+For AZIONI (actions like "scoprire"): consider research-01
+
+
+indifferenza - indifference-01
+
+For EMOZIONI (emotions like "freddezza"): concern apathy-01
+For AZIONI (actions like "ignorare"): consider neglect-01
+
+
+infermiera - nurse-01
+
+For AZIONI (actions like "curare"): consider care-01
+For LUOGHI (places like "ospedale"): consider treat-01
+
+
+inizio - beginning-01
+
+For AZIONI (actions like "cominciare"): consider start-01
+For CARATTERISTICHE (attributes like "nuovo"): consider origin-01
+
+
+insegnante - teacher-01
+
+For AZIONI (actions like "spiegare"): consider educate-01
+For CARATTERISTICHE (attributes like "severo"): consider instruct-01
+
+
+interesse - interest-01
+
+For financial context: consider profit-01
+For EMOZIONI (emotions like "curiosità"): consider fascination-01
+
+
+ira - anger-01
+
+For AZIONI (actions like "urlare"): consider rage-01
+For CARATTERISTICHE (attributes like "violenta"): consider fury-01
+
+
+labirinto - labyrinth-01
+
+For AZIONI (actions like "perdersi"): consider maze-01
+For EMOZIONI (emotions like "confusione"): concern puzzle-01
+
+
+ladro - thief-01
+
+For AZIONI (actions like "rubare"): consider steal-01
+For EMOZIONI (emotions like "paura"): consider criminal-01
+
+
+lealtà - loyalty-01
+
+For PERSONE (people like "amico"): consider faithful-01
+For AZIONI (actions like "difendere"): consider allegiance-01
+
+
+legge - law-01
+
+For PERSONE (people like "giudice"): consider legal-01
+For AZIONI (actions like "obbedire"): consider rule-01
+
+
+libertà - freedom-01
+
+For AZIONI (actions like "scegliere"): consider liberty-01
+For political context: consider independence-01
+
+
+litigio - quarrel-01
+
+For PERSONE (people like "nemici"): consider argue-01
+For EMOZIONI (emotions like "rabbia"): consider dispute-01
+
+
+logica - logic-01
+
+For AZIONI (actions like "ragionare"): consider reason-01
+For CARATTERISTICHE (attributes like "razionale"): consider rational-01
+
+
+marea - tide-01
+
+For CARATTERISTICHE (attributes like "alta"): consider wave-01
+For overwhelming contexts: consider flood-01
+
+
+martello - hammer-01
+
+For AZIONI (actions like "battere"): consider tool-01
+For PERSONE (people like "fabbro"): consider strike-01
+
+
+maturità - maturity-01
+
+For PERSONE (people like "adulto"): consider grown-up-01
+For CARATTERISTICHE (attributes like "saggio"): consider wisdom-01
+
+
+mistero - mystery-01
+
+For AZIONI (actions like "investigare"): consider enigma-01
+For EMOZIONI (emotions like "curiosità"): consider puzzle-01
+
+
+monastero - monastery-01
+
+For PERSONE (people like "monaco"): consider religious-01
+For AZIONI (actions like "pregare"): consider retreat-01
+
+
+morale - moral-01
+
+For CARATTERISTICHE (attributes like "etico"): consider ethics-01
+For AZIONI (actions like "insegnare"): consider lesson-01
+
+
+motivo - reason-01
+
+For AZIONI (actions like "spiegare"): consider motive-01
+For musical context: consider melody-01
+
+
+nebbia - fog-01
+
+For CARATTERISTICHE (attributes like "fitta"): consider mist-01
+For EMOZIONI (emotions like "confusione"): consider haze-01
+
+
+negozio - store-01
+
+For PERSONE (people like "commesso"): consider shop-01
+For AZIONI (actions like "comprare"): consider retail-01
+
+
+noia - boredom-01
+
+For AZIONI (actions like "annoiarsi"): consider tedium-01
+For CARATTERISTICHE (attributes like "monotono"): consider dull-01
+
+
+nomade - nomad-01
+
+For AZIONI (actions like "viaggiare"): consider wander-01
+For CARATTERISTICHE (attributes like "errante"): consider migratory-01
+
+
+odio - hatred-01
+
+For PERSONE (people like "nemico"): consider hate-01
+For EMOZIONI (emotions like "rabbia"): consider loathe-01
+
+
+ombrello - umbrella-01
+
+For AZIONI (actions like "riparare"): consider shield-01
+For CARATTERISTICHE (attributes like "aperto"): consider protect-01
+
+
+ospedale - hospital-01
+
+For PERSONE (people like "medico"): consider care-01
+For AZIONI (actions like "curare"): consider treat-01
+
+
+pace - peace-01
+
+For EMOZIONI (emotions like "serenità"): consider calm-01
+For political context: consider harmony-01
+
+
+palestra - gymnasium-01
+
+For AZIONI (actions like "allenarsi"): consider exercise-01
+For PERSONE (people like "istruttore"): consider train-01
+
+
+palude - swamp-01
+
+For CARATTERISTICHE (attributes like "fangoso"): consider marsh-01
+For difficult situations: consider bog-01
+
+
+passeggero - passenger-01
+
+For AZIONI (actions like "viaggiare"): consider travel-01
+For CARATTERISTICHE (attributes like "temporaneo"): consider transient-01
+
+
+passione - passion-01
+
+For EMOZIONI (emotions like "amore"): consider enthusiasm-01
+For religious context: consider suffering-01
+
+
+patto - pact-01
+
+For AZIONI (actions like "accordarsi"): consider agreement-01
+For CARATTERISTICHE (attributes like "vincolante"): consider covenant-01
+
+
+paura - fear-01
+
+For EMOZIONI (emotions like "terrore"): consider dread-01
+For AZIONI (actions like "tremare"): consider afraid-01
+
+
+piacere - pleasure-01
+
+For EMOZIONI (emotions like "gioia"): consider enjoyment-01
+For courtesy context: consider courtesy-01
+
+
+preghiera - prayer-01
+
+For AZIONI (actions like "supplicare"): consider plea-01
+For religious context: consider worship-01
+
+
+pregio - merit-01
+
+For CARATTERISTICHE (attributes like "prezioso"): consider value-01
+For PERSONE (people like "esperto"): consider worth-01
+
+
+preparazione - preparation-01
+
+For AZIONI (actions like "studiare"): consider ready-01
+For cooking context: consider recipe-01
+
+
+prigione - prison-01
+
+For PERSONE (people like "detenuto"): consider jail-01
+For EMOZIONI (emotions like "claustrofobia"): consider confine-01
+
+
+prigioniero - prisoner-01
+
+For AZIONI (actions like "evadere"): consider captive-01
+For metaphorical contexts: consider trapped-01
+
+
+problema - problem-01
+
+For AZIONI (actions like "risolvere"): consider issue-01
+For EMOZIONI (emotions like "preoccupazione"): consider difficulty-01
+
+
+progresso - progress-01
+
+For AZIONI (actions like "avanzare"): consider advance-01
+For CARATTERISTICHE (attributes like "tecnologico"): consider development-01
+
+
+protesta - protest-01
+
+For AZIONI (actions like "manifestare"): consider demonstrate-01
+For EMOZIONI (emotions like "indignazione"): consider dissent-01
+
+
+provincia - province-01
+
+For LUOGHI (places like "paese"): consider district-01
+For CARATTERISTICHE (attributes like "rurale"): consider regional-01
+
+
+pugile - boxer-01
+
+For AZIONI (actions like "combattere"): consider fight-01
+For sports context: consider athlete-01
+
+
+ragione - reason-01
+
+For AZIONI (actions like "pensare"): consider logic-01
+For arguments: consider right-01
+
+
+reazione - reaction-01
+
+For EMOZIONI (emotions like "sorpresa"): consider response-01
+For chemical context: consider chemical-01
+
+
+regina - queen-01
+
+For AZIONI (actions like "regnare"): consider rule-01
+For chess context: consider chess-piece-01
+
+
+rissa - brawl-01
+
+For AZIONI (actions like "picchiare"): consider fight-01
+For EMOZIONI (emotions like "rabbia"): consider violence-01
+
+
+rito - ritual-01
+
+For religious context: consider ceremony-01
+For AZIONI (actions like "celebrare"): consider tradition-01
+
+
+sbornia - intoxication-01
+
+For AZIONI (actions like "bere"): consider drunk-01
+For EMOZIONI (emotions like "euforia"): consider hangover-01
+
+
+schema - scheme-01
+
+For AZIONI (actions like "pianificare"): consider plan-01
+For CARATTERISTICHE (attributes like "strutturato"): consider pattern-01
+
+
+scherzo - joke-01
+
+For AZIONI (actions like "ridere"): consider prank-01
+For EMOZIONI (emotions like "divertimento"): consider humor-01
+
+
+schiaffo - slap-01
+
+For EMOZIONI (emotions like "umiliazione"): consider insult-01
+For metaphorical contexts: consider rebuke-01
+
+
+scopa - broom-01
+
+For AZIONI (actions like "pulire"): consider sweep-01
+For card game context: consider game-01
+
+
+scopo - purpose-01
+
+For AZIONI (actions like "mirare"): consider goal-01
+For CARATTERISTICHE (attributes like "finale"): consider aim-01
+
+
+scuola - school-01
+
+For PERSONE (people like "studente"): consider education-01
+For AZIONI (actions like "studiare"): consider learn-01
+
+
+separazione - separation-01
+
+For EMOZIONI (emotions like "tristezza"): consider divide-01
+For legal context: consider divorce-01
+
+
+sforzo - effort-01
+
+For AZIONI (actions like "faticare"): consider strain-01
+For CARATTERISTICHE (attributes like "intenso"): consider exertion-01
+
+
+silenzio - silence-01
+
+For AZIONI (actions like "tacere"): consider quiet-01
+For EMOZIONI (emotions like "pace"): consider stillness-01
+
+
+simbolo - symbol-01
+
+For AZIONI (actions like "rappresentare"): consider represent-01
+For CARATTERISTICHE (attributes like "significativo"): consider emblem-01
+
+
+soldato - soldier-01
+
+For AZIONI (actions like "combattere"): consider fight-01
+For CARATTERISTICHE (attributes like "coraggioso"): consider military-01
+
+
+sollievo - relief-01
+
+For EMOZIONI (emotions like "calma"): consider alleviate-01
+For medical context: consider soothe-01
+
+
+sorpresa - surprise-01
+
+For EMOZIONI (emotions like "stupore"): consider astonish-01
+For gift context: consider gift-01
+
+
+sorriso - smile-01
+
+For EMOZIONI (emotions like "felicità"): consider happy-01
+For AZIONI (actions like "ridere"): consider grin-01
+
+
+sorso - sip-01
+
+For AZIONI (actions like "bere"): consider drink-01
+For CARATTERISTICHE (attributes like "piccolo"): consider gulp-01
+
+
+specchio - mirror-01
+
+For AZIONI (actions like "riflettere"): consider reflect-01
+For EMOZIONI (emotions like "vanità"): consider image-01
+
+
+stagione - season-01
+
+For CARATTERISTICHE (attributes like "ciclica"): consider period-01
+For TV context: consider series-01
+
+
+stazione - station-01
+
+For AZIONI (actions like "aspettare"): consider wait-01
+For transport context: consider terminal-01
+
+
+stile - style-01
+
+For fashion context: consider fashion-01
+For CARATTERISTICHE (attributes like "elegante"): consider manner-01
+
+
+strage - massacre-01
+
+For EMOZIONI (emotions like "orrore"): consider slaughter-01
+For AZIONI (actions like "uccidere"): consider carnage-01
+
+
+stupore - astonishment-01
+
+For EMOZIONI (emotions like "meraviglia"): consider amazement-01
+For AZIONI (actions like "sorprendere"): consider wonder-01
+
+
+sveglia - alarm-clock-01
+
+For AZIONI (actions like "suonare"): consider wake-01
+For time context: consider alert-01
+
+
+talento - talent-01
+
+For PERSONE (people like "artista"): consider ability-01
+For CARATTERISTICHE (attributes like "innato"): consider gift-01
+
+
+taverna - tavern-01
+
+For AZIONI (actions like "bere"): consider pub-01
+For historical context: consider inn-01
+
+
+teschio - skull-01
+
+For EMOZIONI (emotions like "paura"): consider death-01
+For pirate context: consider symbol-01
+
+
+tolleranza - tolerance-01
+
+For social context: consider acceptance-01
+For medical context: consider endure-01
+
+
+torta - cake-01
+
+For AZIONI (actions like "mangiare"): consider dessert-01
+For celebration context: consider
+
+
+ContinueApr 25I'll continue with the final revisions of the PropBank frames, focusing on identifying potential ambiguities or awkward interpretations when applying these frames to certain free associates:
+
+torta - cake-01
+* For AZIONI (actions like "mangiare"): consider dessert-01
+* For celebration context: consider treat-01
+trapano - drill-01
+* For AZIONI (actions like "forare"): consider tool-01
+* For dental context: consider dental-procedure-01
+tregua - truce-01
+* For EMOZIONI (emotions like "sollievo"): consider respite-01
+* For weather context: consider pause-01
+tristezza - sadness-01
+* For AZIONI (actions like "piangere"): consider grieve-01
+* For CARATTERISTICHE (attributes like "profonda"): consider melancholy-01
+turista - tourist-01
+* For AZIONI (actions like "viaggiare"): consider visit-01
+* For economic context: consider visitor-01
+turno - turn-01
+* For work context: consider shift-01
+* For game context: consider round-01
+ufficio - office-01
+* For PERSONE (people like "impiegato"): consider workplace-01
+* For AZIONI (actions like "lavorare"): consider administrative-01
+umore - mood-01
+* For EMOZIONI (emotions like "tristezza"): consider state-of-mind-01
+* For medical context: consider disposition-01
+uniforme - uniform-01
+* For military context: consider military-attire-01
+* For CARATTERISTICHE (attributes like "uguale"): consider standardized-01
+uova - egg-01
+* For food context: consider food-01
+* For reproductive context: consider reproduction-01
+uragano - hurricane-01
+* For EMOZIONI (emotions like "paura"): consider devastation-01
+* For metaphorical contexts (like emotional turmoil): consider chaos-01
+urna - urn-01
+* For funeral context: consider container-01
+* For voting context: consider ballot-box-01
+valanga - avalanche-01
+* For AZIONI (actions like "travolgere"): consider overwhelm-01
+* For metaphorical contexts: consider cascade-01
+vedova - widow-01
+* For EMOZIONI (emotions like "lutto"): consider grief-01
+* For AZIONI (actions like "piangere"): consider mourn-01
+vizio - vice-01
+* For habit context: consider addiction-01
+* For moral context: consider sin-01
+zebra - zebra-01
+* For LUOGHI (places like "savana"): consider animal-01
+* For pattern context: consider stripe-01
+zucca - pumpkin-01
+* For Halloween context: consider carve-01
+* For food context: consider vegetable-01
+
+This completes my final revision of all 180 stimulus words with their corresponding PropBank frames, including alternative frames for specific context-associate pairs that might lead to awkward interpretations.
+The key insights from this analysis:
+
+Category-Specific Frame Adjustments: For many stimulus words, the appropriate frame may change depending on whether the free associate belongs to PERSONE, OGGETTI, LUOGHI, AZIONI, EMOZIONI, or CARATTERISTICHE.
+Contextual Ambiguity: Words like "corona" could refer to a royal crown or a wreath, requiring different frames depending on the context.
+Domain Specificity: Terms like "depressione" might require different frames for psychological vs. economic contexts.
+Action-Object Distinctions: For objects that are strongly associated with specific actions (like "scopa"/broom), we need to consider whether the frame should focus on the object itself or its use.
+Metaphorical Extensions: Words like "valanga" or "uragano" may require different frames when used metaphorically versus literally.
+
+This approach provides a flexible framework that can appropriately handle the diverse range of context-associate pairs in the dataset while maintaining conceptual coherence within each stimulus word's semantic space.
+
+===
+I suggest to scale down the task of applying those exceptions by providing a python script that takes the tsv file with all the cases, and adds a frame and two roles based on the last detailed analysis. I will execute it locally
+===
+
+Save the script as assign_frames.py
+Run it from the command line with two arguments - the input and output file paths:
+
+bashpython assign_frames.py tar-free-icat_rel1of4.tsv output_with_frames.tsv
+Key Features of the Script
+
+Comprehensive Frame Mapping: The script contains mappings for all 180 stimulus words to their appropriate PropBank frames.
+Context-Sensitive Role Assignment: The script assigns semantic roles to both the context and associate words based on:
+
+The frame associated with the context word
+The category of the associate word (PERSONE, OGGETTI, LUOGHI, etc.)
+Special handling for specific context-category combinations
+
+
+Exceptional Case Handling: The script includes a special handling mechanism for cases where the standard frame might produce awkward interpretations, allowing override of frames based on specific context-category combinations.
+Role Customization: For each frame type, the script provides appropriate role assignments that make semantic sense within that frame.
+Output Format: The script produces a TSV file with six columns:
+
+Context (stimulus word)
+Associate (free associate word)
+Category (from the original data)
+Frame (the PropBank frame)
+Context_Role (semantic role for the context word)
+Associate_Role (semantic role for the associate word)
+
+===
+
+===
